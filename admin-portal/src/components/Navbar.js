@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import logo from '../assets/Picture1.png'; // Import the logo image
 
 const NavbarContainer = styled.nav`
-  background-color: black;
+  background-color: lightgrey;
   color: white;
   padding: 15px;
   display: flex;
@@ -38,7 +38,7 @@ const NavLink = styled.a`
   cursor: pointer;
 
   &:hover {
-    color: red;
+    color: Black;
   }
 `;
 

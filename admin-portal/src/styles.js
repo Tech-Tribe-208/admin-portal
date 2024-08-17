@@ -6,7 +6,7 @@ export const LoginForm = styled.form`
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: #f4f4f4;
+  background-color: lightgrey;
 `;
 
 export const Input = styled.input`

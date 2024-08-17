@@ -13,8 +13,8 @@ const BookingTable = styled.table`
 `;
 
 const TableHeader = styled.th`
-  background-color: black;
-  color: white;
+  background-color:lightgrey;
+  color: Black;
   padding: 10px;
   text-align: left;
 `;
@@ -34,7 +34,7 @@ const BookingsPage = () => {
   const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
-    // Example of fetching data from an API or local storage
+    
     const fetchedBookings = [
       {
         id: 1,
@@ -48,7 +48,7 @@ const BookingsPage = () => {
         bookingMade: '2024-08-11 09:15',
         bookingDate: '2024-08-16 14:00',
       },
-      // Add more booking data as needed
+      
     ];
     setBookings(fetchedBookings);
   }, []);

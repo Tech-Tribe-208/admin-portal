@@ -17,7 +17,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   const onSubmit = data => {
-    // Perform login logic here
+    
     navigate('/dashboard');
   };
 

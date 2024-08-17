@@ -30,7 +30,7 @@ const Availability = styled.p`
 `;
 
 const BookButton = styled.button`
-  background-color: blue;
+  background-color: Black;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -46,7 +46,7 @@ const CleanersPage = () => {
   const [cleaners, setCleaners] = useState([]);
 
   useEffect(() => {
-    // Example of fetching data from an API or local storage
+   
     const fetchedCleaners = [
       { id: 1, name: 'Alice Johnson', available: true },
       { id: 2, name: 'Bob Smith', available: false },
