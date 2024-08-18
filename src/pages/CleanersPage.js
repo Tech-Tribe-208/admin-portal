@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Navbar from '../components/Navbar';
+import apiRequests from '../apiRequests';
 
 const CleanersContainer = styled.div`
   margin: 20px;
@@ -46,29 +47,26 @@ const CleanersPage = () => {
   const [cleaners, setCleaners] = useState([]);
 
   useEffect(() => {
-   
-    const fetchedCleaners = [
-      { id: 1, name: 'Alice Johnson', available: true },
-      { id: 2, name: 'Bob Smith', available: false },
-      { id: 3, name: 'Catherine Lee', available: true },
-      { id: 4, name: 'David Brown', available: false },
-      { id: 5, name: 'Emma Davis', available: true },
-      { id: 6, name: 'Frank Wilson', available: false },
-      { id: 7, name: 'Grace Taylor', available: true },
-      { id: 8, name: 'Harry Martinez', available: true },
-      { id: 9, name: 'Isabella Moore', available: false },
-      { id: 10, name: 'Jack White', available: true },
-      { id: 11, name: 'Kelly Harris', available: true },
-      { id: 12, name: 'Liam Thompson', available: false },
-      { id: 13, name: 'Mia Lewis', available: true },
-      { id: 14, name: 'Noah Clark', available: false },
-      { id: 15, name: 'Olivia Walker', available: true },
-    ];
-    setCleaners(fetchedCleaners);
+    const fetchCleaners = async () => {
+      const response = await apiRequests.getCleaners();
+      if (response.status === 200) {
+        console.log(response.data.cleaners);
+        setCleaners(response.data.cleaners);
+      } else {
+        alert('Failed to fetch cleaners');
+      }
+    };
+    fetchCleaners();
   }, []);
 
-  const handleBookCleaner = (cleanerId) => {
-    alert(`Cleaner with ID ${cleanerId} booked!`);
+  const handleBookCleaner = async (cleanerId, bookingId) => {
+    const response = await apiRequests.assignCleaner(bookingId, cleanerId);
+    if (response.status === 200) {
+      alert(`Cleaner with ID ${cleanerId} booked!`);
+    }
+    else {
+      alert('Failed to book cleaner');
+    }
   };
 
   return (
@@ -77,15 +75,15 @@ const CleanersPage = () => {
       <CleanersContainer>
         <h2>Cleaners</h2>
         {cleaners.map((cleaner) => (
-          <CleanerCard key={cleaner.id} available={cleaner.available}>
+          <CleanerCard key={cleaner._id} available={cleaner.available}>
             <CleanerInfo>
-              <CleanerName>{cleaner.name}</CleanerName>
+              <CleanerName>{cleaner.fullName}</CleanerName>
               <Availability available={cleaner.available}>
                 {cleaner.available ? 'Available' : 'Not Available'}
               </Availability>
             </CleanerInfo>
             <BookButton 
-              onClick={() => handleBookCleaner(cleaner.id)}
+              onClick={() => handleBookCleaner(cleaner._id)}
               disabled={!cleaner.available}
             >
               {cleaner.available ? 'Book Cleaner' : 'Unavailable'}
