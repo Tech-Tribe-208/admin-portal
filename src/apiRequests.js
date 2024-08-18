@@ -1,8 +1,6 @@
-import {API_URL} from "@env";
-
-const baseURL = API_URL;
-
 import axios from 'axios';
+
+const baseURL = process.env.REACT_APP_API_URL;
 
 const apiRequests = {
     login: async (adminInfo) => {
@@ -16,8 +14,8 @@ const apiRequests = {
     },
     getBookings: async () => {
         try{
-        const response = await axios.post(`${baseURL}/admin/bookings`);
-        return response;
+            const response = await axios.get(`${baseURL}/admin/bookings`);
+            return response;
         }   
         catch(error){
             return error.response;
@@ -43,4 +41,4 @@ const apiRequests = {
     }
 }
 
-module.exports = apiRequests;
+export default apiRequests;
