@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Navbar from '../components/Navbar';
+import apiRequests from '../apiRequests';
 
 const BookingsContainer = styled.div`
   margin: 20px;
@@ -34,23 +35,15 @@ const BookingsPage = () => {
   const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
-    
-    const fetchedBookings = [
-      {
-        id: 1,
-        user: 'John Doe',
-        bookingMade: '2024-08-10 14:30',
-        bookingDate: '2024-08-15 10:00',
-      },
-      {
-        id: 2,
-        user: 'Jane Smith',
-        bookingMade: '2024-08-11 09:15',
-        bookingDate: '2024-08-16 14:00',
-      },
-      
-    ];
-    setBookings(fetchedBookings);
+    const fetchBookings = async () => {
+      const response = await apiRequests.getBookings();
+      if (response.status === 200) {
+        setBookings(response.data.bookings);
+      } else {
+        alert('Failed to fetch bookings');
+      }
+    }
+    fetchBookings();
   }, []);
 
   return (
@@ -61,17 +54,21 @@ const BookingsPage = () => {
         <BookingTable>
           <thead>
             <tr>
-              <TableHeader>User</TableHeader>
-              <TableHeader>Booking Made</TableHeader>
-              <TableHeader>Booking Date</TableHeader>
+              <TableHeader>Customer Name</TableHeader>
+              <TableHeader>Booking Creation Date</TableHeader>
+              <TableHeader>Service Delivery Date</TableHeader>
+              <TableHeader>Intended Duration (hours)</TableHeader>
+              <TableHeader>Status</TableHeader>
             </tr>
           </thead>
           <tbody>
             {bookings.map((booking) => (
               <TableRow key={booking.id}>
-                <TableData>{booking.user}</TableData>
-                <TableData>{booking.bookingMade}</TableData>
-                <TableData>{booking.bookingDate}</TableData>
+                <TableData>{booking.customerId.fullName}</TableData>
+                <TableData>{booking.date}</TableData>
+                <TableData>{booking.intendedDate}</TableData>
+                <TableData>{booking.duration}</TableData>
+                <TableData>{booking.bookingStatus}</TableData>
               </TableRow>
             ))}
           </tbody>
