@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { LoginForm, Input, Button } from '../styles';
+import apiRequests from '../apiRequests';
 
 const schema = yup.object().shape({
   username: yup.string().required('Username is required'),
@@ -16,9 +17,23 @@ const LoginPage = () => {
   });
   const navigate = useNavigate();
 
-  const onSubmit = data => {
-    
-    navigate('/dashboard');
+  const onSubmit = async (adminData) => {
+    try {
+      const response = await apiRequests.login(adminData);
+      console.log(adminData);
+      console.log(response);
+      if (response.status === 200) {
+        navigate('/dashboard');
+      } 
+      else if(response.status === 401){
+        console.error('Invalid password');
+      }
+      else if(response.status === 404){
+        console.error('Admin not found');
+      }
+    } catch (error) {
+      console.error('An error occurred:', error);
+    }
   };
 
   return (
@@ -28,7 +43,7 @@ const LoginPage = () => {
       <p>{errors.username?.message}</p>
       <Input type="password" placeholder="Password" {...register('password')} />
       <p>{errors.password?.message}</p>
-      <Button onClick={() =>onSubmit('go')} type="submit">Login</Button>
+      <Button type="submit">Login</Button>
     </LoginForm>
   );
 };
