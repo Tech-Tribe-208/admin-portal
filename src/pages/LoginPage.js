@@ -5,6 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { LoginForm, Input, Button } from '../styles';
 import apiRequests from '../apiRequests';
+import { showAlert, showToast } from '../components/Alert';
 
 const schema = yup.object().shape({
   username: yup.string().required('Username is required'),
@@ -24,12 +25,15 @@ const LoginPage = () => {
       console.log(response);
       if (response.status === 200) {
         navigate('/dashboard');
+        showToast("success", "Logged in successfully");
       } 
       else if(response.status === 401){
         console.error('Invalid password');
+        showAlert("error", "Log in erreor", "Invalid password")
       }
       else if(response.status === 404){
         console.error('Admin not found');
+        showAlert("error", "Login error", "Admin does not exist")
       }
     } catch (error) {
       console.error('An error occurred:', error);
