@@ -54,7 +54,7 @@ const StatsCard = styled.div`
 
 const Footer = styled.footer`
   margin-top: auto;
-  background-color: #D9CDAD;
+  background-color: #1C422D;
   color: white;
   text-align: center;
   padding: 15px;
