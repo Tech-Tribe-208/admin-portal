@@ -38,7 +38,16 @@ const apiRequests = {
         catch(error){
             return error.response;
         }
-    }
+    },  
+    getStatistics: async () => {
+        try{
+            const response = await axios.get(`${baseURL}/admin/statistics`);
+            return response;
+        }
+        catch(error){
+            return error.response;
+        }
+    },
 }
 
 export default apiRequests;
